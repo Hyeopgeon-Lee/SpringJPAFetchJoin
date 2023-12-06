@@ -56,7 +56,10 @@ public class NoticeController {
 
         // 공지사항 리스트 조회하기
         // Java 8부터 제공되는 Optional 활용하여 NPE(Null Pointer Exception) 처리
-        List<NoticeDTO> rList = Optional.ofNullable(noticeService.getNoticeList())
+//        List<NoticeDTO> rList = Optional.ofNullable(noticeService.getNoticeList())
+//                .orElseGet(ArrayList::new);
+
+        List<NoticeDTO> rList = Optional.ofNullable(noticeService.getNoticeListForQueryDSL())
                 .orElseGet(ArrayList::new);
 
         // 조회된 리스트 결과값 넣어주기

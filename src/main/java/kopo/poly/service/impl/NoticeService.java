@@ -1,8 +1,11 @@
 package kopo.poly.service.impl;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import kopo.poly.dto.NoticeDTO;
 import kopo.poly.repository.NoticeRepository;
 import kopo.poly.repository.entity.NoticeEntity;
+import kopo.poly.repository.entity.QNoticeEntity;
+import kopo.poly.repository.entity.QUserInfoEntity;
 import kopo.poly.service.INoticeService;
 import kopo.poly.util.CmmUtil;
 import kopo.poly.util.DateUtil;
@@ -23,6 +26,8 @@ public class NoticeService implements INoticeService {
     // noticeRepository 변수에 이미 메모리에 올라간 NoticeRepository 객체를 넣어줌
     // 예전에는 autowired 어노테이션를 통해 설정했었지만, 이젠 생성자를 통해 객체 주입함
     private final NoticeRepository noticeRepository;
+
+    private final JPAQueryFactory queryFactory;
 
     @Override
     public List<NoticeDTO> getNoticeList() {
@@ -47,6 +52,40 @@ public class NoticeService implements INoticeService {
         );
 
         log.info(this.getClass().getName() + ".getNoticeList End!");
+
+        return nList;
+    }
+
+    @Transactional
+    @Override
+    public List<NoticeDTO> getNoticeListForQueryDSL() {
+
+        log.info(this.getClass().getName() + ".getNoticeListForQueryDSL Start!");
+
+        QNoticeEntity ne = QNoticeEntity.noticeEntity;
+        QUserInfoEntity ue = QUserInfoEntity.userInfoEntity;
+
+        // 공지사항 전체 리스트 조회하기
+        List<NoticeEntity> rList = queryFactory
+                .selectFrom(ne)
+                .join(ne.userInfo, ue)
+                .fetch();
+
+        log.info("rList : " + rList);
+
+        List<NoticeDTO> nList = new ArrayList<>();
+
+        rList.forEach(e -> {
+                    NoticeDTO rDTO = NoticeDTO.builder().
+                            noticeSeq(e.getNoticeSeq()).title(e.getTitle()).noticeYn(e.getNoticeYn())
+                            .readCnt(e.getReadCnt()).userId(e.getUserId())
+                            .userName(e.getUserInfo().getUserName()).build(); // 회원이름
+
+                    nList.add(rDTO);
+                }
+        );
+
+        log.info(this.getClass().getName() + ".getNoticeListForQueryDSL End!");
 
         return nList;
     }

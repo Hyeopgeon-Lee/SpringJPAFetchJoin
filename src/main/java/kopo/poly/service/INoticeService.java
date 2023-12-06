@@ -12,6 +12,11 @@ public interface INoticeService {
     List<NoticeDTO> getNoticeList();
 
     /**
+     * 공지사항 전체 가져오기
+     */
+    List<NoticeDTO> getNoticeListForQueryDSL();
+
+    /**
      * 공지사항 상세 정보가져오기
      *
      * @param pDTO 공지사항 상세 가져오기 위한 정보

@@ -29,6 +29,7 @@ public interface NoticeRepository extends JpaRepository<NoticeEntity, Long> {
      */
     NoticeEntity findByNoticeSeq(Long noticeSeq);
 
+
     /**
      * 공지사항 상세 보기할 때, 조회수 증가하기
      *
