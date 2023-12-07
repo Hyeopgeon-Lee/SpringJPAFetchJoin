@@ -182,7 +182,11 @@ public class NoticeController {
 
         // 공지사항 상세정보 가져오기
         // Java 8부터 제공되는 Optional 활용하여 NPE(Null Pointer Exception) 처리
-        NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfo(pDTO, true))
+//        NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfo(pDTO, true))
+//                .orElseGet(() -> NoticeDTO.builder().build());
+
+        // QueryDSL 이용한 공지사항 상세 조회
+        NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfoForQueryDSL(pDTO, true))
                 .orElseGet(() -> NoticeDTO.builder().build());
 
         // 조회된 리스트 결과값 넣어주기
@@ -217,7 +221,11 @@ public class NoticeController {
         NoticeDTO pDTO = NoticeDTO.builder().noticeSeq(Long.parseLong(nSeq)).build();
 
         // Java 8부터 제공되는 Optional 활용하여 NPE(Null Pointer Exception) 처리
-        NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfo(pDTO, false))
+//        NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfo(pDTO, false))
+//                .orElseGet(() -> NoticeDTO.builder().build());
+
+        // QueryDSL 이용한 공지사항 상세 조회
+        NoticeDTO rDTO = Optional.ofNullable(noticeService.getNoticeInfoForQueryDSL(pDTO, true))
                 .orElseGet(() -> NoticeDTO.builder().build());
 
         // 조회된 리스트 결과값 넣어주기
