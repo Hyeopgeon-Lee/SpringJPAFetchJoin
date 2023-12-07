@@ -147,7 +147,6 @@ public class NoticeController {
             // 저장이 실패되면 사용자에게 보여줄 메시지
             msg = "실패하였습니다. : " + e.getMessage();
             log.info(e.toString());
-            e.printStackTrace();
 
         } finally {
             // 결과 메시지 전달하기
@@ -239,7 +238,7 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".noticeUpdate Start!");
 
         String msg = ""; // 메시지 내용
-        MsgDTO dto = null; // 결과 메시지 구조
+        MsgDTO dto; // 결과 메시지 구조
 
         try {
             String userId = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID")); // 아이디
@@ -273,7 +272,6 @@ public class NoticeController {
         } catch (Exception e) {
             msg = "실패하였습니다. : " + e.getMessage();
             log.info(e.toString());
-            e.printStackTrace();
 
         } finally {
 
@@ -297,7 +295,7 @@ public class NoticeController {
         log.info(this.getClass().getName() + ".noticeDelete Start!");
 
         String msg = ""; // 메시지 내용
-        MsgDTO dto = null; // 결과 메시지 구조
+        MsgDTO dto; // 결과 메시지 구조
 
         try {
             String nSeq = CmmUtil.nvl(request.getParameter("nSeq")); // 글번호(PK)
@@ -322,7 +320,6 @@ public class NoticeController {
         } catch (Exception e) {
             msg = "실패하였습니다. : " + e.getMessage();
             log.info(e.toString());
-            e.printStackTrace();
 
         } finally {
 
