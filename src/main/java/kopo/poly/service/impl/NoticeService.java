@@ -37,8 +37,6 @@ public class NoticeService implements INoticeService {
         // 공지사항 전체 리스트 조회하기
         List<NoticeEntity> rList = noticeRepository.getListFetchJoin();
 
-        log.info("rList : " + rList);
-
         List<NoticeDTO> nList = new ArrayList<>();
 
         rList.forEach(e -> {
@@ -56,6 +54,10 @@ public class NoticeService implements INoticeService {
         return nList;
     }
 
+    /**
+     * 조회 로직은 Transaction 사용하지 않아도 됨
+     * 그러나 영속성 처리 및 Lazy Loading 문제 해결을 위해 Transaction 사용함
+     */
     @Transactional
     @Override
     public List<NoticeDTO> getNoticeListForQueryDSL() {
@@ -70,8 +72,6 @@ public class NoticeService implements INoticeService {
                 .selectFrom(ne)
                 .join(ne.userInfo, ue)
                 .fetch();
-
-        log.info("rList : " + rList);
 
         List<NoticeDTO> nList = new ArrayList<>();
 
@@ -151,7 +151,7 @@ public class NoticeService implements INoticeService {
     }
 
     @Override
-    public void deleteNoticeInfo(NoticeDTO pDTO) throws Exception {
+    public void deleteNoticeInfo(NoticeDTO pDTO) {
 
         log.info(this.getClass().getName() + ".deleteNoticeInfo Start!");
 
@@ -167,7 +167,7 @@ public class NoticeService implements INoticeService {
     }
 
     @Override
-    public void insertNoticeInfo(NoticeDTO pDTO) throws Exception {
+    public void insertNoticeInfo(NoticeDTO pDTO) {
 
         log.info(this.getClass().getName() + ".InsertNoticeInfo Start!");
 
