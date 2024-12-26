@@ -48,8 +48,8 @@
 - 아래 명령어를 실행하여 레포지토리를 클론합니다.
 
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone https://github.com/Hyeopgeon-Lee/SpringJPAFetchJoin
+cd SpringJPAFetchJoin
 ```
 
 2. 데이터베이스 설정
